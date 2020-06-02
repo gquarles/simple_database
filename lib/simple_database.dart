@@ -16,8 +16,11 @@ class SimpleDatabase<T> {
 
   Future<void> _saveList(List<T> objList) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    //print(json.encode(objList).toString());
     prefs.setString(name, json.encode(objList).toString());
+  }
+
+  Future<int> count() async {
+    return (await this.getAll()).length;
   }
 
   Future<List<T>> getAll() async {

@@ -56,6 +56,9 @@ void main() {
 
     intList = await intDB.getAll();
 
+    int count = await intDB.count();
+
+    expect(count, 3);
     expect(intList.length, 3);
 
     expect(intList[0], 10);
@@ -159,6 +162,10 @@ void main() {
     await classDB.add(SimpleClass(19, 'Bob', 6.0, true));
 
     classList = await classDB.getAll();
+
+    int count = await classDB.count();
+
+    expect(count, 2);
 
     expect(classList.length, 2);
     expect(classList[1].name, 'Bob');
