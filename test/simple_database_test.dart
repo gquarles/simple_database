@@ -137,7 +137,7 @@ void main() {
   });
 
   test('class', () async {
-    SimpleDatabase<SimpleClass> classDB = SimpleDatabase<SimpleClass>(name: 'class', create: SimpleClass.create);
+    SimpleDatabase<SimpleClass> classDB = SimpleDatabase<SimpleClass>(name: 'class', fromJson: (fromJson) => SimpleClass.fromJson(fromJson));
 
     SimpleClass john = SimpleClass(18, 'John', 5.2, true);
 

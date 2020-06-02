@@ -7,11 +7,11 @@ import 'dart:async';
 
 class SimpleDatabase<T> {
   final String name;
-  final Function(Map<String, dynamic>) create;
+  final Function(Map<String, dynamic>) fromJson;
 
   SimpleDatabase({
     @required this.name,
-    this.create,
+    this.fromJson,
   });
 
   Future<void> _saveList(List<T> objList) async {
@@ -39,7 +39,7 @@ class SimpleDatabase<T> {
       }
     } else {
       for (dynamic object in mapList) {
-        objList.add(create(object));
+        objList.add(fromJson(object));
       }
     }
 
