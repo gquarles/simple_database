@@ -1,4 +1,5 @@
 library simple_database;
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -6,8 +7,12 @@ import 'dart:async';
 
 class SimpleDatabase<T> {
   final String name;
+  final Function(Map<String, dynamic>) create;
 
-  SimpleDatabase({@required this.name});
+  SimpleDatabase({
+    @required this.name,
+    this.create,
+  });
 
   Future<void> _saveList(List<T> objList) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -23,8 +28,19 @@ class SimpleDatabase<T> {
     List<dynamic> mapList = json.decode(prefs.getString(name));
     List<T> objList = List<T>();
 
-    for (dynamic object in mapList) {
-      objList.add(object);
+    var type = (T).toString();
+
+    if (type == 'int' ||
+        type == 'double' ||
+        type == 'bool' ||
+        type == 'String') {
+      for (dynamic object in mapList) {
+        objList.add(object);
+      }
+    } else {
+      for (dynamic object in mapList) {
+        objList.add(create(object));
+      }
     }
 
     return objList;

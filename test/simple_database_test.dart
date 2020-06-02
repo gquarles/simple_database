@@ -13,6 +13,10 @@ class SimpleClass {
 
   SimpleClass.fromJson(Map<String, dynamic> json) : age = json['age'], name = json['name'], height = json['height'], gender = json['gender'];
 
+  SimpleClass create(Map<String, dynamic> json) {
+    return SimpleClass.fromJson(json);
+  }
+
   Map<String, dynamic> toJson() => {
     'age': age,
     'name' : name,
@@ -132,5 +136,39 @@ void main() {
     expect(doubleList[2], 0.0);
   });
 
-  
+  test('class', () async {
+    SimpleClass create(Map<String, dynamic> json) {
+      return SimpleClass.fromJson(json);
+    }
+
+    SimpleDatabase<SimpleClass> classDB = SimpleDatabase<SimpleClass>(name: 'class', create: create);
+
+    SimpleClass john = SimpleClass(18, 'John', 5.2, true);
+
+    List<SimpleClass> classList = await classDB.getAll();
+
+    expect(classList.length, 0);
+
+    await classDB.add(john);
+    
+    classList = await classDB.getAll();
+
+    expect(classList.length, 1);
+    expect(classList[0].name, 'John');
+    expect(classList[0].age, 18);
+    expect(classList[0].height, 5.2);
+    expect(classList[0].gender, true);
+
+    
+    await classDB.add(SimpleClass(19, 'Bob', 6.0, true));
+
+    classList = await classDB.getAll();
+
+    expect(classList.length, 2);
+    expect(classList[1].name, 'Bob');
+    expect(classList[1].age, 19);
+    expect(classList[1].height, 6.0);
+    expect(classList[1].gender, true);
+    
+  });
 }
