@@ -30,9 +30,9 @@ void main() {
   SharedPreferences.setMockInitialValues({});
 
   test('int', () async {
-    SimpleDatabase<int> intDB = SimpleDatabase<int>(name: 'int');
+    SimpleDatabase intDB = SimpleDatabase(name: 'int');
 
-    List<int> intList = await intDB.getAll();
+    List<dynamic> intList = await intDB.getAll();
 
     expect(intList.length, 0);
 
@@ -69,9 +69,9 @@ void main() {
   });
 
   test('string', () async {
-    SimpleDatabase<String> stringDB = SimpleDatabase<String>(name: 'string');
+    SimpleDatabase stringDB = SimpleDatabase(name: 'string');
 
-    List<String> stringList = await stringDB.getAll();
+    List<dynamic> stringList = await stringDB.getAll();
 
     expect(stringList.length, 0);
 
@@ -92,9 +92,9 @@ void main() {
   });
 
   test('bool', () async {
-    SimpleDatabase<bool> boolDB = SimpleDatabase<bool>(name: 'bool');
+    SimpleDatabase boolDB = SimpleDatabase(name: 'bool');
 
-    List<bool> boolList = await boolDB.getAll();
+    List<dynamic> boolList = await boolDB.getAll();
 
     expect(boolList.length, 0);
 
@@ -117,9 +117,9 @@ void main() {
   });
   
   test('double', () async {
-    SimpleDatabase<double> doubleDB = SimpleDatabase<double>(name: 'double');
+    SimpleDatabase doubleDB = SimpleDatabase(name: 'double');
 
-    List<double> doubleList = await doubleDB.getAll();
+    List<dynamic> doubleList = await doubleDB.getAll();
 
     expect(doubleList.length, 0);
 
@@ -140,11 +140,11 @@ void main() {
   });
 
   test('class', () async {
-    SimpleDatabase<SimpleClass> classDB = SimpleDatabase<SimpleClass>(name: 'class', fromJson: (fromJson) => SimpleClass.fromJson(fromJson));
+    SimpleDatabase classDB = SimpleDatabase(name: 'class', fromJson: (fromJson) => SimpleClass.fromJson(fromJson));
 
     SimpleClass john = SimpleClass(18, 'John', 5.2, true);
 
-    List<SimpleClass> classList = await classDB.getAll();
+    List<dynamic> classList = await classDB.getAll();
 
     expect(classList.length, 0);
 
@@ -172,6 +172,24 @@ void main() {
     expect(classList[1].age, 19);
     expect(classList[1].height, 6.0);
     expect(classList[1].gender, true);
+
+    for (SimpleClass person in await classDB.getAll()) {
+      expect(person.gender, true);
+    }
     
+  });
+
+  test('list', () async {
+    SimpleDatabase listStringDB = SimpleDatabase(name: 'listString');
+
+    await listStringDB.add(['hello', 'world', '!']);
+    await listStringDB.add(['second', 'list']);
+    await listStringDB.add(121);
+
+    List<dynamic> strings = await listStringDB.getAll();
+
+    expect(strings[0][0], 'hello');
+    expect(strings[1][1], 'list');
+    expect(strings[2], 121);
   });
 }
