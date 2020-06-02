@@ -13,7 +13,7 @@ class SimpleClass {
 
   SimpleClass.fromJson(Map<String, dynamic> json) : age = json['age'], name = json['name'], height = json['height'], gender = json['gender'];
 
-  SimpleClass create(Map<String, dynamic> json) {
+  static SimpleClass create(Map<String, dynamic> json) {
     return SimpleClass.fromJson(json);
   }
 
@@ -137,11 +137,7 @@ void main() {
   });
 
   test('class', () async {
-    SimpleClass create(Map<String, dynamic> json) {
-      return SimpleClass.fromJson(json);
-    }
-
-    SimpleDatabase<SimpleClass> classDB = SimpleDatabase<SimpleClass>(name: 'class', create: create);
+    SimpleDatabase<SimpleClass> classDB = SimpleDatabase<SimpleClass>(name: 'class', create: SimpleClass.create);
 
     SimpleClass john = SimpleClass(18, 'John', 5.2, true);
 
