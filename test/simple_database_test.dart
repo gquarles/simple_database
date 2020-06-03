@@ -191,5 +191,22 @@ void main() {
     expect(strings[0][0], 'hello');
     expect(strings[1][1], 'list');
     expect(strings[2], 121);
+
+    List<int> ints = [12, 22, 44];
+
+    await listStringDB.add(ints);
+
+    strings = await listStringDB.getAll();
+
+    expect(strings[3][1], 22);
+
+    List<List<List<dynamic>>> deepList = [[[1, 2, 3, 'Hello'], ['World']]];
+
+    await listStringDB.add(deepList);
+
+    strings = await listStringDB.getAll();
+
+    expect(strings[4][0][0][0], 1);
+    expect(strings[4][0][1][0], 'World');
   });
 }

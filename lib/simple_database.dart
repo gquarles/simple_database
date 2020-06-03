@@ -44,13 +44,51 @@ class SimpleDatabase {
     return objList;
   }
 
+  Future<dynamic> getAt(int index) async {
+    List<dynamic> list = await getAll();
+
+    if (list.length <= index) return null;
+
+    return list[index];
+  }
+
+  Future<void> saveList(List<dynamic> list) async {
+    await _saveList(list);
+  }
+
+  Future<void> addAll(List<dynamic> list) async {
+    List<dynamic> current = await getAll();
+
+    for (dynamic item in list) {
+      current.add(item);
+    }
+
+    await _saveList(current);
+  }
+
+  Future<void> insert(dynamic object, int index) async {
+    List<dynamic> list = await getAll();
+
+    list.insert(object, index);
+  }
+
   Future<void> clear() async {
     await _saveList(List<dynamic>());
+  }
+
+  Future<void> removeAt(int index) async {
+    List<dynamic> list = await getAll();
+
+    if (index <= list.length) return;
+
+    list.removeAt(index);
+
+    await _saveList(list);
   }
 
   Future<void> add(dynamic object) async {
     List<dynamic> objList = await this.getAll();
     objList.add(object);
-    _saveList(objList);
+    await _saveList(objList);
   }
 }
