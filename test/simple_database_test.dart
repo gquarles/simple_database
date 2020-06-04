@@ -209,4 +209,9 @@ void main() {
     expect(strings[4][0][0][0], 1);
     expect(strings[4][0][1][0], 'World');
   });
+
+  test('fail for github', () async {
+    int x = 1;
+    expect(x, 0);
+  });
 }
