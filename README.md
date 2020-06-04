@@ -1,4 +1,5 @@
 # simple_database
+![CI](https://github.com/gquarles/simple_database/workflows/CI/badge.svg)
 
 A new Flutter package project.
 
