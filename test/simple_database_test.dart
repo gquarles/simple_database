@@ -211,7 +211,6 @@ void main() {
   });
 
   test('contains', () async {
-    //Test to see if the contains(object) function works
     SimpleDatabase testDB = SimpleDatabase(name: 'contains');
 
     await testDB.add(120);
@@ -226,7 +225,6 @@ void main() {
   });
 
   test('remove', () async {
-    //Test to see if the contains(object) function works
     SimpleDatabase testDB = SimpleDatabase(name: 'remove');
 
     await testDB.add(120);
@@ -242,7 +240,6 @@ void main() {
   });
 
   test('removeAt', () async {
-    //Test to see if the contains(object) function works
     SimpleDatabase testDB = SimpleDatabase(name: 'removeAt');
 
     await testDB.add(120);
@@ -258,7 +255,6 @@ void main() {
   });
 
   test('count', () async {
-    //Test to see if the contains(object) function works
     SimpleDatabase testDB = SimpleDatabase(name: 'count');
 
     expect(await testDB.count(), 0);
@@ -271,7 +267,6 @@ void main() {
   });
 
   test('addAll', () async {
-    //Test to see if the contains(object) function works
     SimpleDatabase testDB = SimpleDatabase(name: 'addAll');
 
     List<String> strings = ['Hello', 'World', '123'];
@@ -289,7 +284,6 @@ void main() {
   });
 
   test('getAt', () async {
-    //Test to see if the contains(object) function works
     SimpleDatabase testDB = SimpleDatabase(name: 'getAt');
 
     List<String> strings = ['Hello', 'World', '123'];
@@ -302,7 +296,6 @@ void main() {
   });
 
   test('insert', () async {
-    //Test to see if the contains(object) function works
     SimpleDatabase testDB = SimpleDatabase(name: 'insert');
 
     await testDB.insert('World!', 0);
@@ -313,7 +306,6 @@ void main() {
   });
 
   test('clear', () async {
-    //Test to see if the contains(object) function works
     SimpleDatabase testDB = SimpleDatabase(name: 'insert');
 
     await testDB.insert('World!', 0);
@@ -328,7 +320,6 @@ void main() {
   });
 
   test('saveList', () async {
-    //Test to see if the contains(object) function works
     SimpleDatabase testDB = SimpleDatabase(name: 'saveList');
 
     await testDB.insert('World!', 0);
