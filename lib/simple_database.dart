@@ -69,7 +69,9 @@ class SimpleDatabase {
   Future<void> insert(dynamic object, int index) async {
     List<dynamic> list = await getAll();
 
-    list.insert(object, index);
+    list.insert(index, object);
+
+    _saveList(list);
   }
 
   Future<void> clear() async {
@@ -79,11 +81,37 @@ class SimpleDatabase {
   Future<void> removeAt(int index) async {
     List<dynamic> list = await getAll();
 
-    if (index <= list.length) return;
+    if (index >= list.length) return;
 
     list.removeAt(index);
 
     await _saveList(list);
+  }
+
+  Future<bool> remove(dynamic object) async {
+    List<dynamic> objects = await getAll();
+    List<dynamic> newList = List<dynamic>();
+
+    for (dynamic obj in objects) {
+      if (obj != object) newList.add(obj);
+    }
+
+    await _saveList(newList);
+    
+    if (newList.length != objects.length) return true;
+    return false;
+  }
+
+  Future<bool> contains(dynamic object) async {
+    List<dynamic> objects = await getAll();
+
+    for (dynamic obj in objects) {
+      if (object == obj) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   Future<void> add(dynamic object) async {

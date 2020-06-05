@@ -209,4 +209,136 @@ void main() {
     expect(strings[4][0][0][0], 1);
     expect(strings[4][0][1][0], 'World');
   });
+
+  test('contains', () async {
+    //Test to see if the contains(object) function works
+    SimpleDatabase testDB = SimpleDatabase(name: 'contains');
+
+    await testDB.add(120);
+    await testDB.add(true);
+    await testDB.add('String');
+
+    expect(await testDB.contains(120), true);
+    expect(await testDB.contains(true), true);
+    expect(await testDB.contains('String'), true);
+    expect(await testDB.contains(100), false);
+    expect(await testDB.contains(false), false);
+  });
+
+  test('remove', () async {
+    //Test to see if the contains(object) function works
+    SimpleDatabase testDB = SimpleDatabase(name: 'remove');
+
+    await testDB.add(120);
+    await testDB.add(true);
+    await testDB.add('String');
+
+    expect(await testDB.count(), 3);
+    
+    await testDB.remove(120);
+
+    expect(await testDB.contains(120), false);
+    expect(await testDB.count(), 2);
+  });
+
+  test('removeAt', () async {
+    //Test to see if the contains(object) function works
+    SimpleDatabase testDB = SimpleDatabase(name: 'removeAt');
+
+    await testDB.add(120);
+    await testDB.add(true);
+    await testDB.add('String');
+
+    expect(await testDB.count(), 3);
+    
+    await testDB.removeAt(0);
+
+    expect(await testDB.count(), 2);
+    expect(await testDB.contains(120), false);
+  });
+
+  test('count', () async {
+    //Test to see if the contains(object) function works
+    SimpleDatabase testDB = SimpleDatabase(name: 'count');
+
+    expect(await testDB.count(), 0);
+    await testDB.add(120);
+    expect(await testDB.count(), 1);
+    await testDB.add(true);
+    expect(await testDB.count(), 2);
+    await testDB.add('String');
+    expect(await testDB.count(), 3);
+  });
+
+  test('addAll', () async {
+    //Test to see if the contains(object) function works
+    SimpleDatabase testDB = SimpleDatabase(name: 'addAll');
+
+    List<String> strings = ['Hello', 'World', '123'];
+
+    await testDB.addAll(strings);
+
+    await testDB.add('456');
+
+    List<dynamic> objects = await testDB.getAll();
+
+    expect(objects[0], 'Hello');
+    expect(objects[1], 'World');
+    expect(objects[2], '123');
+    expect(objects[3], '456');
+  });
+
+  test('getAt', () async {
+    //Test to see if the contains(object) function works
+    SimpleDatabase testDB = SimpleDatabase(name: 'getAt');
+
+    List<String> strings = ['Hello', 'World', '123'];
+
+    await testDB.addAll(strings);
+
+    expect(await testDB.getAt(0), 'Hello');
+    expect(await testDB.getAt(2), '123');
+    expect(await testDB.getAt(3), null);
+  });
+
+  test('insert', () async {
+    //Test to see if the contains(object) function works
+    SimpleDatabase testDB = SimpleDatabase(name: 'insert');
+
+    await testDB.insert('World!', 0);
+    await testDB.insert('Hello, ', 0);
+
+    expect(await testDB.getAt(0), 'Hello, ');
+    expect(await testDB.getAt(1), 'World!');
+  });
+
+  test('clear', () async {
+    //Test to see if the contains(object) function works
+    SimpleDatabase testDB = SimpleDatabase(name: 'insert');
+
+    await testDB.insert('World!', 0);
+    await testDB.insert('Hello, ', 0);
+
+    expect(await testDB.getAt(0), 'Hello, ');
+    expect(await testDB.getAt(1), 'World!');
+
+    await testDB.clear();
+
+    expect(await testDB.count(), 0);
+  });
+
+  test('saveList', () async {
+    //Test to see if the contains(object) function works
+    SimpleDatabase testDB = SimpleDatabase(name: 'saveList');
+
+    await testDB.insert('World!', 0);
+    await testDB.insert('Hello, ', 0);
+
+    expect(await testDB.getAt(0), 'Hello, ');
+    expect(await testDB.getAt(1), 'World!');
+
+    await testDB.clear();
+
+    expect(await testDB.count(), 0);
+  });
 }
