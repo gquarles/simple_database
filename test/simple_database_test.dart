@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_database/simple_database.dart';
 
+//This is a simple example class to test saving of cutsom objects
 class SimpleClass {
   final int age;
   final String name;
@@ -11,12 +12,10 @@ class SimpleClass {
 
   SimpleClass(this.age, this.name, this.height, this.gender);
 
+  //Implement fromJson - Required
   SimpleClass.fromJson(Map<String, dynamic> json) : age = json['age'], name = json['name'], height = json['height'], gender = json['gender'];
 
-  static SimpleClass create(Map<String, dynamic> json) {
-    return SimpleClass.fromJson(json);
-  }
-
+  //Implement toJson - Required
   Map<String, dynamic> toJson() => {
     'age': age,
     'name' : name,
@@ -26,6 +25,7 @@ class SimpleClass {
 }
 
 void main() {
+  //Init shared prefs and flutter for testing
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({});
 
@@ -56,9 +56,7 @@ void main() {
 
     intList = await intDB.getAll();
 
-    int count = await intDB.count();
-
-    expect(count, 3);
+    expect(await intDB.count(), 3);
     expect(intList.length, 3);
 
     expect(intList[0], 10);
@@ -176,6 +174,9 @@ void main() {
     for (SimpleClass person in await classDB.getAll()) {
       expect(person.gender, true);
     }
+
+    await classDB.add('Hello, World!');
+    expect(await classDB.getAt(2), 'Hello, World!');
     
   });
 
@@ -322,14 +323,15 @@ void main() {
   test('saveList', () async {
     SimpleDatabase testDB = SimpleDatabase(name: 'saveList');
 
-    await testDB.insert('World!', 0);
-    await testDB.insert('Hello, ', 0);
-
-    expect(await testDB.getAt(0), 'Hello, ');
-    expect(await testDB.getAt(1), 'World!');
-
-    await testDB.clear();
-
     expect(await testDB.count(), 0);
+
+    await testDB.saveList(['Hello, World!', 'Second String!']);
+
+    expect(await testDB.count(), 2);
+
+    await testDB.saveList(['New List!']);
+
+    expect(await testDB.count(), 1);
+    expect(await testDB.getAt(0), 'New List!');
   });
 }

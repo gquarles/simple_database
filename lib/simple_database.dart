@@ -31,13 +31,12 @@ class SimpleDatabase {
     List<dynamic> mapList = json.decode(prefs.getString(name));
     List<dynamic> objList = List<dynamic>();
 
-    if (fromJson == null) {
-      for (dynamic object in mapList) {
-        objList.add(object);
-      }
-    } else {
-      for (dynamic object in mapList) {
+    for (dynamic object in mapList) {
+      //Attempt to use the user provided fromJson function to rebuild an object
+      try {
         objList.add(fromJson(object));
+      } catch (error) {
+        objList.add(object);
       }
     }
 
@@ -97,7 +96,7 @@ class SimpleDatabase {
     }
 
     await _saveList(newList);
-    
+
     if (newList.length != objects.length) return true;
     return false;
   }
