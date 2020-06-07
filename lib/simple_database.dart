@@ -6,23 +6,29 @@ import 'dart:convert';
 import 'dart:async';
 
 class SimpleDatabase {
+  ///The name of the file for localstorage
   final String name;
+  ///Optional function used to rebuild user defined objects
   final Function(Map<String, dynamic>) fromJson;
 
+  ///Requires a name and an optional function used to rebuild from json
   SimpleDatabase({
     @required this.name,
     this.fromJson,
   });
 
+  ///Private function for writing a list to json
   Future<void> _saveList(List<dynamic> objList) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(name, json.encode(objList).toString());
   }
 
+  ///The amount of items in the database
   Future<int> count() async {
     return (await this.getAll()).length;
   }
 
+  ///A list of dynamic which contains all objects in the database
   Future<List<dynamic>> getAll() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -43,6 +49,7 @@ class SimpleDatabase {
     return objList;
   }
 
+  ///The object stored at an idex
   Future<dynamic> getAt(int index) async {
     List<dynamic> list = await getAll();
 
@@ -51,10 +58,12 @@ class SimpleDatabase {
     return list[index];
   }
 
+  ///Overrite the current data with the passed list
   Future<void> saveList(List<dynamic> list) async {
     await _saveList(list);
   }
 
+  ///Add a list of objects into the database
   Future<void> addAll(List<dynamic> list) async {
     List<dynamic> current = await getAll();
 
@@ -65,6 +74,7 @@ class SimpleDatabase {
     await _saveList(current);
   }
 
+  ///Insert object at an index
   Future<void> insert(dynamic object, int index) async {
     List<dynamic> list = await getAll();
 
@@ -73,10 +83,12 @@ class SimpleDatabase {
     _saveList(list);
   }
 
+  ///Delete all objects from the database
   Future<void> clear() async {
     await _saveList(List<dynamic>());
   }
 
+  ///Delete an object at an index
   Future<void> removeAt(int index) async {
     List<dynamic> list = await getAll();
 
@@ -86,7 +98,8 @@ class SimpleDatabase {
 
     await _saveList(list);
   }
-
+  
+  ///Delete the first instance of an object
   Future<bool> remove(dynamic object) async {
     List<dynamic> objects = await getAll();
     List<dynamic> newList = List<dynamic>();
@@ -101,6 +114,7 @@ class SimpleDatabase {
     return false;
   }
 
+  ///Bool if the database contains an object
   Future<bool> contains(dynamic object) async {
     List<dynamic> objects = await getAll();
 
@@ -113,6 +127,7 @@ class SimpleDatabase {
     return false;
   }
 
+  ///Add an object into the database
   Future<void> add(dynamic object) async {
     List<dynamic> objList = await this.getAll();
     objList.add(object);
