@@ -1,5 +1,5 @@
 name: simple_database
-description: A simple lightweight wrapper for the SharedPreferences Flutter package. Simple Database provides an abstraction layer for storing objects instead of key, value pairs. This makes it very easy to get a quick local storage solution up and running.
+description: A simple lightweight wrapper for the SharedPreferences Flutter package. 
 version: 1.0.1
 homepage: https://github.com/gquarles/simple_database
 

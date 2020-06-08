@@ -13,15 +13,19 @@ class SimpleClass {
   SimpleClass(this.age, this.name, this.height, this.gender);
 
   //Implement fromJson - Required
-  SimpleClass.fromJson(Map<String, dynamic> json) : age = json['age'], name = json['name'], height = json['height'], gender = json['gender'];
+  SimpleClass.fromJson(Map<String, dynamic> json)
+      : age = json['age'],
+        name = json['name'],
+        height = json['height'],
+        gender = json['gender'];
 
   //Implement toJson - Required
   Map<String, dynamic> toJson() => {
-    'age': age,
-    'name' : name,
-    'height' : height,
-    'gender' : gender,
-  };
+        'age': age,
+        'name': name,
+        'height': height,
+        'gender': gender,
+      };
 }
 
 void main() {
@@ -86,7 +90,8 @@ void main() {
 
     expect(stringList[1], 'Simple Database!');
 
-    expect('${stringList[0]} ${stringList[1]}', 'Hello, World! Simple Database!');
+    expect(
+        '${stringList[0]} ${stringList[1]}', 'Hello, World! Simple Database!');
   });
 
   test('bool', () async {
@@ -97,7 +102,7 @@ void main() {
     expect(boolList.length, 0);
 
     await boolDB.add(true);
-    
+
     boolList = await boolDB.getAll();
 
     expect(boolList.length, 1);
@@ -113,7 +118,7 @@ void main() {
     expect(boolList[2], false);
     expect(boolList.length, 3);
   });
-  
+
   test('double', () async {
     SimpleDatabase doubleDB = SimpleDatabase(name: 'double');
 
@@ -138,7 +143,8 @@ void main() {
   });
 
   test('class', () async {
-    SimpleDatabase classDB = SimpleDatabase(name: 'class', fromJson: (fromJson) => SimpleClass.fromJson(fromJson));
+    SimpleDatabase classDB = SimpleDatabase(
+        name: 'class', fromJson: (fromJson) => SimpleClass.fromJson(fromJson));
 
     SimpleClass john = SimpleClass(18, 'John', 5.2, true);
 
@@ -147,7 +153,7 @@ void main() {
     expect(classList.length, 0);
 
     await classDB.add(john);
-    
+
     classList = await classDB.getAll();
 
     expect(classList.length, 1);
@@ -156,7 +162,6 @@ void main() {
     expect(classList[0].height, 5.2);
     expect(classList[0].gender, true);
 
-    
     await classDB.add(SimpleClass(19, 'Bob', 6.0, true));
 
     classList = await classDB.getAll();
@@ -177,7 +182,6 @@ void main() {
 
     await classDB.add('Hello, World!');
     expect(await classDB.getAt(2), 'Hello, World!');
-    
   });
 
   test('list', () async {
@@ -201,7 +205,12 @@ void main() {
 
     expect(strings[3][1], 22);
 
-    List<List<List<dynamic>>> deepList = [[[1, 2, 3, 'Hello'], ['World']]];
+    List<List<List<dynamic>>> deepList = [
+      [
+        [1, 2, 3, 'Hello'],
+        ['World']
+      ]
+    ];
 
     await listStringDB.add(deepList);
 
@@ -233,7 +242,7 @@ void main() {
     await testDB.add('String');
 
     expect(await testDB.count(), 3);
-    
+
     await testDB.remove(120);
 
     expect(await testDB.contains(120), false);
@@ -248,7 +257,7 @@ void main() {
     await testDB.add('String');
 
     expect(await testDB.count(), 3);
-    
+
     await testDB.removeAt(0);
 
     expect(await testDB.count(), 2);

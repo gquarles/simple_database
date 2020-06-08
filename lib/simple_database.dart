@@ -8,6 +8,7 @@ import 'dart:async';
 class SimpleDatabase {
   ///The name of the file for localstorage
   final String name;
+
   ///Optional function used to rebuild user defined objects
   final Function(Map<String, dynamic>) fromJson;
 
@@ -98,7 +99,7 @@ class SimpleDatabase {
 
     await _saveList(list);
   }
-  
+
   ///Delete the first instance of an object
   Future<bool> remove(dynamic object) async {
     List<dynamic> objects = await getAll();
