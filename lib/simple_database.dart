@@ -134,4 +134,34 @@ class SimpleDatabase {
     objList.add(object);
     await _saveList(objList);
   }
+
+  //Get specific type at in index
+  Future<T> getAtType<T>(int index) async {
+    List<dynamic> list = await getAll();
+
+    if (index >= list.length) return null;
+
+    try {
+      return list[index];
+    } catch (error) {
+      return null;
+    }
+  }
+
+  //Get a list of all objects of a type from the database
+  Future<List<T>> getAllType<T>() async {
+    List<dynamic> dynamicList = await getAll();
+
+    List<T> list = List<T>();
+
+    for (dynamic object in dynamicList) {
+      try {
+        list.add(object);
+      } catch (error) {
+        print(error + ' Simple Database');
+      }
+    }
+
+    return list;
+  }
 }

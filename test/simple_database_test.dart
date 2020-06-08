@@ -343,4 +343,28 @@ void main() {
     expect(await testDB.count(), 1);
     expect(await testDB.getAt(0), 'New List!');
   });
+
+  test('typedReturnAll', () async {
+    SimpleDatabase testDB = SimpleDatabase(name: 'typedReturnAll');
+
+    await testDB.add(123);
+
+    List<int> list = await testDB.getAllType<int>();
+
+    expect(list[0], 123);
+  });
+
+  test('typedReturn', () async {
+    SimpleDatabase testDB = SimpleDatabase(name: 'typedReturn', fromJson: (fromJson) => SimpleClass.fromJson(fromJson));
+    SimpleClass john = SimpleClass(18, 'John', 5.2, true);
+
+    await testDB.add(123);
+    await testDB.add(john);
+
+    int x = await testDB.getAtType<int>(0);
+    SimpleClass person = await testDB.getAtType<SimpleClass>(1);
+
+    expect(x, 123);
+    expect(person.name, 'John');
+  });
 }
