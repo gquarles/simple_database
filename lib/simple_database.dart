@@ -158,7 +158,7 @@ class SimpleDatabase {
       try {
         list.add(object);
       } catch (error) {
-        print(error + ' Simple Database');
+        
       }
     }
 
