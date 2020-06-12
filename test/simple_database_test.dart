@@ -366,5 +366,10 @@ void main() {
 
     expect(x, 123);
     expect(person.name, 'John');
+
+    expect(await testDB.getAtType<String>(0), null);
+
+    expect(await testDB.getAllType<int>(), [123]);
+    expect(await testDB.getAllType<String>(), []);
   });
 }
