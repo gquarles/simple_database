@@ -1,3 +1,5 @@
+## [1.0.4] - Fix bugs add tests
+
 ## [1.0.3] - Add a way to get type safe objects
 
 ## [1.0.2] - Update docs
