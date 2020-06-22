@@ -81,7 +81,7 @@ class SimpleDatabase {
 
     list.insert(index, object);
 
-    _saveList(list);
+    await _saveList(list);
   }
 
   ///Delete all objects from the database
