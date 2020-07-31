@@ -157,9 +157,7 @@ class SimpleDatabase {
     for (dynamic object in dynamicList) {
       try {
         list.add(object);
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     }
 
     return list;
