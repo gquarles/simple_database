@@ -10,6 +10,23 @@ Please feel free to [contribute](https://github.com/gquarles/simple_database)
 ## Usage
 Please add `simple_database` as a dependency in your pubspec.yaml file
 
+
+## No Setup Primative Storage
+You can easily setup a database of primitive types just by assigning it a name, Simple Database will init the DB if it has not been created yet on the phone for you.
+
+```dart
+void main() async {
+    SimpleDatabase names = SimpleDatabase(name: 'names');
+
+    await names.add('Bob');
+    await names.add('Doug');
+
+    for (var name in await names.getAll()) {
+      print(name);
+    }
+}
+```
+
 ## Non-Primitive object storage
 You can store your own objects you have created easily just by implementing **2** functions in the class. **toJson** and **fromJson**. You will need to pass the **fromJson** function to the constructor of SimpleDatabase if you want it to rebuild the json into your object. You do not *need* this, it will just return a hash map with the values from your object if the function is not provided.
 
