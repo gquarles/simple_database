@@ -1,3 +1,5 @@
+## [2.0.0] - Migrate to null safety
+
 ## [1.0.6] - Add example to main readme aswell
 
 ## [1.0.5] - Fix constraints

@@ -1,6 +1,6 @@
 name: simple_database
 description: A simple lightweight wrapper for the SharedPreferences Flutter package. 
-version: 1.0.6
+version: 2.0.0
 homepage: https://github.com/gquarles/simple_database
 
 environment:
