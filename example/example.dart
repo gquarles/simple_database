@@ -1,4 +1,4 @@
-import 'package:simple_database/simple_database.dart';
+import '../lib/simple_database.dart';
 
 void main() async {
     SimpleDatabase names = SimpleDatabase(name: 'names');
