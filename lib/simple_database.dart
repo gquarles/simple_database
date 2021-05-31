@@ -141,16 +141,14 @@ class SimpleDatabase {
   }
 
   //Get specific type at in index
-  Future<T?> getAtType<T>(int index) async {
+  Future<T> getAtType<T>(int index) async {
     List<dynamic> list = await getAll();
 
-    if (index >= list.length) return null;
+    assert(index < list.length, true);
+    assert(list.length != 0);
+    //assert(index < 0, false);
 
-    try {
-      return list[index];
-    } catch (error) {
-      return null;
-    }
+    return list[index];
   }
 
   //Get a list of all objects of a type from the database

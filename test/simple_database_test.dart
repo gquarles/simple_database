@@ -5,10 +5,10 @@ import 'package:simple_database/simple_database.dart';
 
 //This is a simple example class to test saving of cutsom objects
 class SimpleClass {
-  final int age;
-  final String name;
-  final double height;
-  final bool gender;
+  final int? age;
+  final String? name;
+  final double? height;
+  final bool? gender;
 
   SimpleClass(this.age, this.name, this.height, this.gender);
 
@@ -355,7 +355,9 @@ void main() {
   });
 
   test('typedReturn', () async {
-    SimpleDatabase testDB = SimpleDatabase(name: 'typedReturn', fromJson: (fromJson) => SimpleClass.fromJson(fromJson));
+    SimpleDatabase testDB = SimpleDatabase(
+        name: 'typedReturn',
+        fromJson: (fromJson) => SimpleClass.fromJson(fromJson));
     SimpleClass john = SimpleClass(18, 'John', 5.2, true);
 
     await testDB.add(123);
@@ -366,8 +368,6 @@ void main() {
 
     expect(x, 123);
     expect(person.name, 'John');
-
-    expect(await testDB.getAtType<String>(0), null);
 
     expect(await testDB.getAllType<int>(), [123]);
     expect(await testDB.getAllType<String>(), []);
