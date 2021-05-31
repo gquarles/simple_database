@@ -1,6 +1,5 @@
 library simple_database;
 
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -10,11 +9,11 @@ class SimpleDatabase {
   final String name;
 
   ///Optional function used to rebuild user defined objects
-  final Function(Map<String, dynamic>) fromJson;
+  final Function(Map<String, dynamic>)? fromJson;
 
   ///Requires a name and an optional function used to rebuild from json
   SimpleDatabase({
-    @required this.name,
+    required this.name,
     this.fromJson,
   });
 
@@ -33,15 +32,21 @@ class SimpleDatabase {
   Future<List<dynamic>> getAll() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    if (prefs.getString(name) == null) return List<dynamic>();
+    if (prefs.getString(name) == null) return [];
 
-    List<dynamic> mapList = json.decode(prefs.getString(name));
-    List<dynamic> objList = List<dynamic>();
+    String? jsonString = prefs.getString(name);
+
+    if (jsonString == null) return [];
+
+    List<dynamic>? mapList = json.decode(jsonString);
+    List<dynamic> objList = [];
+
+    if (mapList == null) return [];
 
     for (dynamic object in mapList) {
       //Attempt to use the user provided fromJson function to rebuild an object
       try {
-        objList.add(fromJson(object));
+        objList.add(fromJson!(object));
       } catch (error) {
         objList.add(object);
       }
@@ -86,7 +91,7 @@ class SimpleDatabase {
 
   ///Delete all objects from the database
   Future<void> clear() async {
-    await _saveList(List<dynamic>());
+    await _saveList([]);
   }
 
   ///Delete an object at an index
@@ -103,7 +108,7 @@ class SimpleDatabase {
   ///Delete the first instance of an object
   Future<bool> remove(dynamic object) async {
     List<dynamic> objects = await getAll();
-    List<dynamic> newList = List<dynamic>();
+    List<dynamic> newList = [];
 
     for (dynamic obj in objects) {
       if (obj != object) newList.add(obj);
@@ -136,7 +141,7 @@ class SimpleDatabase {
   }
 
   //Get specific type at in index
-  Future<T> getAtType<T>(int index) async {
+  Future<T?> getAtType<T>(int index) async {
     List<dynamic> list = await getAll();
 
     if (index >= list.length) return null;
@@ -152,7 +157,7 @@ class SimpleDatabase {
   Future<List<T>> getAllType<T>() async {
     List<dynamic> dynamicList = await getAll();
 
-    List<T> list = List<T>();
+    List<T> list = [];
 
     for (dynamic object in dynamicList) {
       try {
