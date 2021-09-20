@@ -21,9 +21,30 @@ void main() async {
     await names.add('Bob');
     await names.add('Doug');
 
-    for (var name in await names.getAll()) {
+    for (var name in await names.getAllType<String>()) {
       print(name);
     }
+}
+```
+
+## Mixed Types
+You can use a single database that stores multiple primitive types and then specify what type you want from the database.
+```dart
+void main() async {
+    SimpleDatabase names = SimpleDatabase(name: 'names');
+
+    await names.add('Bob');
+    await names.add(150)
+    await names.add('Doug');
+  
+    //Print out all strings in the db
+    for (var name in await names.getAllType<String>()) {
+      print(name);
+    }
+  
+    //Print out at an index, with a type
+    var number = await names.getAtType<int>(1);
+    print(number);
 }
 ```
 
@@ -59,7 +80,7 @@ void main() async {
 
     await classDB.add(john);
 
-    dynamic person = await classDB.getAt(0);
+    SimpleClass person = await classDB.getAtType<SimpleClass>(0);
     print(person.name);
 }
 ```

@@ -6,7 +6,8 @@ void main() async {
     await names.add('Bob');
     await names.add('Doug');
 
-    for (var name in await names.getAll()) {
+    //Get all of the strings in the database
+    for (var name in await names.getAllType<String>()) {
       print(name);
     }
 }

@@ -372,4 +372,30 @@ void main() {
     expect(await testDB.getAllType<int>(), [123]);
     expect(await testDB.getAllType<String>(), []);
   });
+
+  test('exampleCode', () async {
+    SimpleDatabase names = SimpleDatabase(name: 'names');
+
+    await names.add('Bob');
+    await names.add('Doug');
+
+    for (var name in await names.getAllType<String>()) {
+      expect(true, name == 'Bob' || name == 'Doug');
+    }
+  });
+
+  test('mixedTypes', () async {
+    SimpleDatabase mixed = SimpleDatabase(name: 'mixed');
+
+    await mixed.add('This is a string!');
+    await mixed.add(15);
+    await mixed.add('This is a second string');
+
+    List<String> allStrings = await mixed.getAllType<String>();
+
+    expect(2, allStrings.length);
+
+    expect('This is a string!', await mixed.getAtType<String>(0));
+    expect([15], await mixed.getAllType<int>());
+  });
 }
